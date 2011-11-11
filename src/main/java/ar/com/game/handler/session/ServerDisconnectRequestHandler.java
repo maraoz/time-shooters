@@ -22,7 +22,7 @@ public class ServerDisconnectRequestHandler extends BaseServerHandler implements
 		Long sessionId = getClient(message.getChannel());
 		sendAndTerminateConnection(new DisconnectResponse(), sessionId);
 		removeClient(sessionId);
-		sendToAll(new DisconnectNotify(sessionId.toString()));
+		sendToAll(new DisconnectNotify(sessionId));
 	}
 
 }

@@ -4,14 +4,14 @@ import ar.com.game.network.BaseMessage;
 
 public class DisconnectNotify extends BaseMessage {
 	
-	private final String who;
+	private final Long who;
 
-	public DisconnectNotify(String who) {
+	public DisconnectNotify(Long who) {
 		super();
 		this.who = who;
 	}
 	
-	public String getWho() {
+	public Long getWho() {
 		return who;
 	}
 	
