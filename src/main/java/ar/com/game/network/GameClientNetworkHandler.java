@@ -3,7 +3,7 @@ package ar.com.game.network;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 
-import ar.com.game.network.message.login.ConnectRequest;
+import ar.com.game.network.message.session.ConnectRequest;
 
 public class GameClientNetworkHandler extends DispatcherNetworkHandler {
 

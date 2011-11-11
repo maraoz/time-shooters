@@ -1,11 +1,14 @@
 package ar.com.game.main;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
+import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
+import ar.com.game.gui.GraphicsDisplayTask;
 import ar.com.game.gui.LineReaderTask;
 import ar.com.game.network.GameClientPipelineFactory;
 import ar.com.game.network.dispatch.MessageHubConfigurer;
@@ -25,18 +28,30 @@ public class GameClient implements Runnable {
 		MessageHubConfigurer.setupClient();
 
 		// create GUI for client
-		Executors.newSingleThreadExecutor().execute(new LineReaderTask());
+		ExecutorService pool = Executors.newFixedThreadPool(5);
+		pool.execute(new GraphicsDisplayTask());
+		pool.execute(new LineReaderTask());
+		
 
 		// Configure the network client.
-		ClientBootstrap bootstrap = new ClientBootstrap(
-				new NioClientSocketChannelFactory(
-						Executors.newCachedThreadPool(),
-						Executors.newCachedThreadPool()));
+		NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(
+				Executors.newCachedThreadPool(),
+				Executors.newCachedThreadPool());
+		
+		ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
 
 		// Set up the game client pipeline factory.
 		bootstrap.setPipelineFactory(new GameClientPipelineFactory());
 
 		// Start the connection attempt.
-		bootstrap.connect(new InetSocketAddress(host, port));
+		ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port));
+		
+		// wait for connection to end and release resources
+		future.awaitUninterruptibly();
+        if (!future.isSuccess()) {
+            future.getCause().printStackTrace();
+        }
+        future.getChannel().getCloseFuture().awaitUninterruptibly();
+        channelFactory.releaseExternalResources();
 	}
 }

@@ -1,10 +1,10 @@
-package ar.com.game.handler.login;
+package ar.com.game.handler.session;
 
 import ar.com.game.handler.base.BaseServerHandler;
 import ar.com.game.network.dispatch.MessageListener;
-import ar.com.game.network.message.login.ConnectNotify;
-import ar.com.game.network.message.login.ConnectRequest;
-import ar.com.game.network.message.login.ConnectResponse;
+import ar.com.game.network.message.session.ConnectNotify;
+import ar.com.game.network.message.session.ConnectRequest;
+import ar.com.game.network.message.session.ConnectResponse;
 
 public class ServerConnectRequestHandler extends BaseServerHandler implements
 		MessageListener<ConnectRequest> {

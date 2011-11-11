@@ -37,4 +37,8 @@ public class ServerConnectionManager {
 		return clients.inverse().get(channel);
 	}
 
+	public void removeClient(Long session) {
+		clients.remove(session);
+	}
+
 }
