@@ -22,7 +22,6 @@ public class ClientPlayerMoveNotifyHandler extends BaseClientHandler implements
 		Long who = message.getWho();
 		Position where = message.getWhere();
 		
-		System.out.println("player "+who+" is at "+where);
 		ClientBackend.movePlayer(who, where);
 	}
 
