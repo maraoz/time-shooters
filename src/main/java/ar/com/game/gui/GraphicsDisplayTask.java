@@ -15,6 +15,7 @@ import ar.com.game.network.message.gui.MouseMovedNotify;
 
 public class GraphicsDisplayTask implements Runnable {
 
+	private static final int MOUSE_NETWORK_RESOLUTION = 4;
 	private static final int PLAYER_SIZE = 10;
 
 	public void run() {
@@ -39,7 +40,7 @@ public class GraphicsDisplayTask implements Runnable {
 
 			int x = Mouse.getX();
 			int y = Mouse.getY();
-			if (frame % 5 == 0) {
+			if (frame % MOUSE_NETWORK_RESOLUTION == 0) {
 				MessageHub.route(new MouseMovedNotify(new Position(x, y)));
 			}
 			frame++;
