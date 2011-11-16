@@ -1,6 +1,8 @@
 package ar.com.game.backend.client;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ import com.google.common.collect.Maps;
 public class ClientBackend {
 	
 	private static Map<Long, Vector2D> playerPositions = Maps.newHashMap();
-	private static List<Updatable> updatees = Lists.newArrayList();
+	private static List<Updatable> updatees = Collections.synchronizedList(new ArrayList<Updatable>());
 	
 	public static void movePlayer(Long id, Vector2D where) {
 		playerPositions.put(id, where);
