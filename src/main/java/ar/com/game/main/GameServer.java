@@ -1,11 +1,13 @@
 package ar.com.game.main;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
+import ar.com.game.backend.server.UpdateWorldTask;
 import ar.com.game.network.GameServerPipelineFactory;
 import ar.com.game.network.dispatch.MessageHubConfigurer;
 
@@ -21,6 +23,10 @@ public class GameServer implements Runnable {
 		
 		// bind message handlers
 		MessageHubConfigurer.setupServer();
+		
+		// create threads for server
+		ExecutorService pool = Executors.newFixedThreadPool(5);
+		pool.execute(new UpdateWorldTask());
 		
 		// Configure the server.
         ServerBootstrap bootstrap = new ServerBootstrap(

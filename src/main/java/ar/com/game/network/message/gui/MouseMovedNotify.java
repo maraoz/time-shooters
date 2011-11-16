@@ -1,17 +1,17 @@
 package ar.com.game.network.message.gui;
 
-import ar.com.game.backend.domain.Position;
+import ar.com.game.backend.domain.Vector2D;
 import ar.com.game.network.BaseMessage;
 
 public class MouseMovedNotify extends BaseMessage {
-	private final Position pos;
+	private final Vector2D pos;
 
-	public MouseMovedNotify(Position pos) {
+	public MouseMovedNotify(Vector2D pos) {
 		super();
 		this.pos = pos;
 	}
 
-	public Position getPosition() {
+	public Vector2D getPosition() {
 		return pos;
 	}
 

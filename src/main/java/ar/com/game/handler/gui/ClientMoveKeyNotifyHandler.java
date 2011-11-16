@@ -2,7 +2,6 @@ package ar.com.game.handler.gui;
 
 import ar.com.game.handler.base.BaseClientHandler;
 import ar.com.game.network.dispatch.MessageListener;
-import ar.com.game.network.message.gui.MouseMovedNotify;
 import ar.com.game.network.message.gui.MoveKeyNotify;
 import ar.com.game.network.message.move.PlayerMoveRequest;
 

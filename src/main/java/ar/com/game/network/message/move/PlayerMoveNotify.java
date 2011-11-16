@@ -1,14 +1,14 @@
 package ar.com.game.network.message.move;
 
-import ar.com.game.backend.domain.Position;
+import ar.com.game.backend.domain.Vector2D;
 import ar.com.game.network.BaseMessage;
 
 public class PlayerMoveNotify extends BaseMessage {
 
 	private final Long who;
-	private final Position where;
+	private final Vector2D where;
 
-	public PlayerMoveNotify(Long who, Position where) {
+	public PlayerMoveNotify(Long who, Vector2D where) {
 		super();
 		this.who = who;
 		this.where = where;
@@ -18,7 +18,7 @@ public class PlayerMoveNotify extends BaseMessage {
 		return who;
 	}
 
-	public Position getWhere() {
+	public Vector2D getWhere() {
 		return where;
 	}
 

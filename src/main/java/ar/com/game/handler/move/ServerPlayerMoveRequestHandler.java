@@ -21,7 +21,7 @@ public class ServerPlayerMoveRequestHandler extends BaseServerHandler implements
 	public void handle(PlayerMoveRequest message) {
 		Long sessionId = getClient(message.getChannel());
 		ServerBackend.movePlayer(sessionId, message.getDelta());
-		sendToAll(new PlayerMoveNotify(sessionId, ServerBackend.getPosition(sessionId)));
+		sendToAll(new PlayerMoveNotify(sessionId, ServerBackend.getPlayer(sessionId).getPosition()));
 	}
 
 }

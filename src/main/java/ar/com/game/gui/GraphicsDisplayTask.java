@@ -3,20 +3,25 @@ package ar.com.game.gui;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
+import ar.com.game.backend.SynchedTask;
 import ar.com.game.backend.client.ClientBackend;
-import ar.com.game.backend.domain.Position;
+import ar.com.game.backend.domain.Bullet;
+import ar.com.game.backend.domain.Vector2D;
 import ar.com.game.network.dispatch.MessageHub;
 import ar.com.game.network.message.gui.CloseNotify;
 import ar.com.game.network.message.gui.MoveKeyNotify;
+import ar.com.game.network.message.gui.ShootKeyNotify;
 
-public class GraphicsDisplayTask implements Runnable {
+public class GraphicsDisplayTask extends SynchedTask implements Runnable {
 
 	private static final int MOUSE_NETWORK_RESOLUTION = 4;
 	private static final int PLAYER_SIZE = 10;
+	private static final int BULLET_SIZE = 3;
 
 	public void run() {
 		try {
@@ -35,7 +40,7 @@ public class GraphicsDisplayTask implements Runnable {
 
 
 			update(getDelta());
-			renderGL();
+			ClientBackend.update();
 
 			int x = 0;
 			int y = 0;
@@ -49,21 +54,33 @@ public class GraphicsDisplayTask implements Runnable {
 			if( Keyboard.isKeyDown(Keyboard.KEY_S) )
 				y -= 1;
 			if( y!= 0 || x!=0 )
-				MessageHub.route(new MoveKeyNotify(new Position(x,y)));
+				MessageHub.route(new MoveKeyNotify(new Vector2D(x,y)));
 			
-			//int x = Mouse.getX();
-			//int y = Mouse.getY();
+			boolean leftButtonDown = Mouse.isButtonDown(0);
+			if (leftButtonDown) {
+				MessageHub.route(new ShootKeyNotify(getMousePos()));
+			}
+			
+			
 			if (frame % MOUSE_NETWORK_RESOLUTION == 0) {
-				//MessageHub.route(new MouseMovedNotify(new Position(x, y)));
+				//MessageHub.route(new MouseMovedNotify(getMousePos());
 			}
 			frame++;
+			
+			
+			
+			renderGL();
 			Display.update();
-			Display.sync(60); // cap fps to 60fps
+			waitFPS();
 		}
 
 		MessageHub.route(new CloseNotify());
 		Display.destroy();
 
+	}
+
+	private Vector2D getMousePos() {
+		return new Vector2D(Mouse.getX(), Mouse.getY());
 	}
 
 	/** angle of quad rotation */
@@ -132,24 +149,33 @@ public class GraphicsDisplayTask implements Runnable {
 		// R,G,B,A Set The Color To Blue One Time Only
 		GL11.glColor3f(0.5f, 0.5f, 1.0f);
 
-		// draw quads
-		for (Position p : ClientBackend.getPositions()) {
-			int x = p.getX();
-			int y = Display.getHeight() - p.getY();
-			
-			GL11.glPushMatrix();
-			GL11.glTranslatef(x, y, 0);
-			GL11.glRotatef(rotation, 0f, 0f, 1f);
-			GL11.glTranslatef(-x, -y, 0);
-			
-			GL11.glBegin(GL11.GL_QUADS);
-			GL11.glVertex2f(x - PLAYER_SIZE, y - PLAYER_SIZE);
-			GL11.glVertex2f(x + PLAYER_SIZE, y - PLAYER_SIZE);
-			GL11.glVertex2f(x + PLAYER_SIZE, y + PLAYER_SIZE);
-			GL11.glVertex2f(x - PLAYER_SIZE, y + PLAYER_SIZE);
-			GL11.glEnd();
-			GL11.glPopMatrix();
+		// draw players
+		for (Vector2D p : ClientBackend.getPositions()) {
+			drawRect(p.getX(), p.getY(), PLAYER_SIZE);
 		}
+		
+		// draw bullets
+		for (Bullet b : ClientBackend.getBullets()) {
+			drawRect(b.getPos().getX(), b.getPos().getY(), BULLET_SIZE);
+		}
+	}
+
+	private void drawRect(float x, float wy, float size) {
+		
+		float y = Display.getHeight() - wy;
+		
+		GL11.glPushMatrix();
+		GL11.glTranslatef(x, y, 0);
+		GL11.glRotatef(rotation, 0f, 0f, 1f);
+		GL11.glTranslatef(-x, -y, 0);
+		
+		GL11.glBegin(GL11.GL_QUADS);
+		GL11.glVertex2f(x - size , y - size);
+		GL11.glVertex2f(x + size, y - size);
+		GL11.glVertex2f(x + size, y + size);
+		GL11.glVertex2f(x - size, y + size);
+		GL11.glEnd();
+		GL11.glPopMatrix();
 	}
 
 }
