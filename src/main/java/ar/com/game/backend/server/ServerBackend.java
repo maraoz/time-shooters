@@ -53,8 +53,10 @@ public class ServerBackend {
 	}
 	
 	public static void update() {
-		for (Updatable u : updatees) {
-			u.update();
+		synchronized (updatees) {
+			for (Updatable u : updatees) {
+				u.update();
+			}
 		}
 	}
 
