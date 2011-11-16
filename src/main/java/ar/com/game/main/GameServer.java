@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
-import ar.com.game.backend.server.UpdateWorldTask;
+import ar.com.game.backend.tasks.UpdateWorldTask;
 import ar.com.game.network.GameServerPipelineFactory;
 import ar.com.game.network.dispatch.MessageHubConfigurer;
 

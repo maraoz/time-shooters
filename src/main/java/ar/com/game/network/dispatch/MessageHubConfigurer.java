@@ -2,6 +2,8 @@ package ar.com.game.network.dispatch;
 
 import ar.com.game.handler.chat.ClientChatNotifyHandler;
 import ar.com.game.handler.chat.ServerChatRequestHandler;
+import ar.com.game.handler.event.ClientBulletHitEventHandler;
+import ar.com.game.handler.event.ServerBulletHitEventHandler;
 import ar.com.game.handler.gui.ClientCloseNotifyHandler;
 import ar.com.game.handler.gui.ClientLineTypedNotifyHandler;
 import ar.com.game.handler.gui.ClientMouseMovedNotifyHandler;
@@ -19,6 +21,7 @@ import ar.com.game.handler.shoot.ServerBulletShotRequestHandler;
 import ar.com.game.handler.update.ClientUpdatableCreateNotifyHandler;
 import ar.com.game.network.message.chat.ChatNotify;
 import ar.com.game.network.message.chat.ChatRequest;
+import ar.com.game.network.message.event.BulletHitEvent;
 import ar.com.game.network.message.gui.CloseNotify;
 import ar.com.game.network.message.gui.LineTypedNotify;
 import ar.com.game.network.message.gui.MouseMovedNotify;
@@ -54,6 +57,7 @@ public class MessageHubConfigurer {
 		// no handler for ShootKeyNotify
 		MessageHub.subscribe(BulletShotRequest.class, ServerBulletShotRequestHandler.get());
 		// no handler for UpdatableCreateNotify
+		MessageHub.subscribe(BulletHitEvent.class, ServerBulletHitEventHandler.get());
 		
 	}
 
@@ -76,6 +80,7 @@ public class MessageHubConfigurer {
 		MessageHub.subscribe(ShootKeyNotify.class,  ClientShootKeyNotifyHandler.get());
 		// no handler for BulletShotRequest
 		MessageHub.subscribe(UpdatableCreateNotify.class,  ClientUpdatableCreateNotifyHandler.get());
+		MessageHub.subscribe(BulletHitEvent.class, ClientBulletHitEventHandler.get());
 		
 	}
 

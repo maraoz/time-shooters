@@ -1,4 +1,4 @@
-package ar.com.game.backend.client;
+package ar.com.game.backend;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import ar.com.game.backend.domain.Bullet;
+import ar.com.game.backend.domain.BulletHit;
 import ar.com.game.backend.domain.Updatable;
 import ar.com.game.backend.domain.Vector2D;
 
@@ -47,9 +48,17 @@ public class ClientBackend {
 	public static void update() {
 		synchronized (updatees) {
 			for (Updatable u : updatees) {
+				if (!u.isAlive()) {
+					updatees.remove(u);
+				}
 				u.update();
 			}
 		}
+	}
+
+	public static void bulletHit(BulletHit hit) {
+		// do something! boom
+		System.out.println("bullet "+hit.getBulletId()+" hit player "+hit.getVictimId());
 	}
 
 }

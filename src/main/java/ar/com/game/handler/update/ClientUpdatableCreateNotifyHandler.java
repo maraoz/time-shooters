@@ -1,6 +1,6 @@
 package ar.com.game.handler.update;
 
-import ar.com.game.backend.client.ClientBackend;
+import ar.com.game.backend.ClientBackend;
 import ar.com.game.handler.base.BaseClientHandler;
 import ar.com.game.network.dispatch.MessageListener;
 import ar.com.game.network.message.update.UpdatableCreateNotify;

@@ -1,9 +1,10 @@
 package ar.com.game.handler.base;
 
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.jboss.netty.channel.Channel;
+
+import ar.com.game.backend.domain.IdentityProvider;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.BiMap;
@@ -11,7 +12,6 @@ import com.google.common.collect.HashBiMap;
 
 public class ServerConnectionManager {
 
-	AtomicLong nextSession = new AtomicLong(0);
 	BiMap<Long, Channel> clients = HashBiMap.create();
 
 	/**
@@ -20,7 +20,7 @@ public class ServerConnectionManager {
 	 */
 	public Long addClient(Channel channel) {
 		Preconditions.checkState(!clients.containsValue(channel));
-		Long sessionId = nextSession.incrementAndGet();
+		Long sessionId = IdentityProvider.next();
 		clients.put(sessionId, channel);
 		return sessionId;
 	}

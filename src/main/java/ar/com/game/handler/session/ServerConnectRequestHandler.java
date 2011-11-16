@@ -1,6 +1,6 @@
 package ar.com.game.handler.session;
 
-import ar.com.game.backend.server.ServerBackend;
+import ar.com.game.backend.ServerBackend;
 import ar.com.game.handler.base.BaseServerHandler;
 import ar.com.game.network.dispatch.MessageListener;
 import ar.com.game.network.message.session.ConnectNotify;

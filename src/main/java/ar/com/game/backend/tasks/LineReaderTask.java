@@ -1,4 +1,4 @@
-package ar.com.game.gui;
+package ar.com.game.backend.tasks;
 
 import java.io.BufferedReader;
 import java.io.IOException;

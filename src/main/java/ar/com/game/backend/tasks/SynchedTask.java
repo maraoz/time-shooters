@@ -1,4 +1,4 @@
-package ar.com.game.backend;
+package ar.com.game.backend.tasks;
 
 public class SynchedTask {
 

@@ -8,8 +8,8 @@ import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
-import ar.com.game.gui.GraphicsDisplayTask;
-import ar.com.game.gui.LineReaderTask;
+import ar.com.game.backend.tasks.GraphicsDisplayTask;
+import ar.com.game.backend.tasks.LineReaderTask;
 import ar.com.game.network.GameClientPipelineFactory;
 import ar.com.game.network.dispatch.MessageHubConfigurer;
 

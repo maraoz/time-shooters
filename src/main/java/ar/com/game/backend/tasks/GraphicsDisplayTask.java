@@ -1,4 +1,4 @@
-package ar.com.game.gui;
+package ar.com.game.backend.tasks;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -8,8 +8,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
-import ar.com.game.backend.SynchedTask;
-import ar.com.game.backend.client.ClientBackend;
+import ar.com.game.backend.ClientBackend;
 import ar.com.game.backend.domain.Bullet;
 import ar.com.game.backend.domain.Vector2D;
 import ar.com.game.network.dispatch.MessageHub;

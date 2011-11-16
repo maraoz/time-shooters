@@ -62,5 +62,9 @@ public class Vector2D implements Serializable {
 		return diff.times(1/diff.norm());
 	}
 	
+	public float distanceTo(Vector2D other) {
+		return this.minus(other).norm();
+	}
+	
 	
 }
