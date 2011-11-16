@@ -36,8 +36,10 @@ public class ClientBackend {
 	
 	public static List<Bullet> getBullets() {
 		List<Bullet> ret = Lists.newArrayList();
-		for (Updatable u : updatees) {
-			ret.add((Bullet) u);
+		synchronized (updatees) {
+			for (Updatable u : updatees) {
+				ret.add((Bullet) u);
+			}
 		}
 		return ret;
 	}
