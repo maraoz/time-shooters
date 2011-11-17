@@ -2,7 +2,7 @@ package ar.com.game.gui;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Mouse;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -11,7 +11,7 @@ import ar.com.game.backend.client.ClientBackend;
 import ar.com.game.backend.domain.Position;
 import ar.com.game.network.dispatch.MessageHub;
 import ar.com.game.network.message.gui.CloseNotify;
-import ar.com.game.network.message.gui.MouseMovedNotify;
+import ar.com.game.network.message.gui.MoveKeyNotify;
 
 public class GraphicsDisplayTask implements Runnable {
 
@@ -37,11 +37,24 @@ public class GraphicsDisplayTask implements Runnable {
 			update(getDelta());
 			renderGL();
 
+			int x = 0;
+			int y = 0;
 
-			int x = Mouse.getX();
-			int y = Mouse.getY();
+			if( Keyboard.isKeyDown(Keyboard.KEY_D) )
+				x += 1;
+			if( Keyboard.isKeyDown(Keyboard.KEY_A) )
+				x -= 1;
+			if( Keyboard.isKeyDown(Keyboard.KEY_W) )
+				y += 1;
+			if( Keyboard.isKeyDown(Keyboard.KEY_S) )
+				y -= 1;
+			if( y!= 0 || x!=0 )
+				MessageHub.route(new MoveKeyNotify(new Position(x,y)));
+			
+			//int x = Mouse.getX();
+			//int y = Mouse.getY();
 			if (frame % MOUSE_NETWORK_RESOLUTION == 0) {
-				MessageHub.route(new MouseMovedNotify(new Position(x, y)));
+				//MessageHub.route(new MouseMovedNotify(new Position(x, y)));
 			}
 			frame++;
 			Display.update();

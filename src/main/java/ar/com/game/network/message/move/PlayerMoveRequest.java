@@ -12,7 +12,7 @@ public class PlayerMoveRequest extends BaseMessage {
 		this.pos = pos;
 	}
 
-	public Position getPosition() {
+	public Position getDelta() {
 		return pos;
 	}
 

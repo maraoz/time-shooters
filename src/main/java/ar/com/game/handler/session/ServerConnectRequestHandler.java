@@ -1,5 +1,6 @@
 package ar.com.game.handler.session;
 
+import ar.com.game.backend.server.ServerBackend;
 import ar.com.game.handler.base.BaseServerHandler;
 import ar.com.game.network.dispatch.MessageListener;
 import ar.com.game.network.message.session.ConnectNotify;
@@ -20,6 +21,7 @@ public class ServerConnectRequestHandler extends BaseServerHandler implements
 
 	public void handle(ConnectRequest message) {
 		Long sessionId = addClient(message.getChannel());
+		ServerBackend.addPlayer(sessionId);
 		send(new ConnectResponse(sessionId), sessionId);
 		sendToAll(new ConnectNotify(sessionId.toString()));
 	}

@@ -49,6 +49,10 @@ public class Position implements Serializable {
 	public String toString() {
 		return "("+x+", "+y+")";
 	}
+
+	public Position add(Position delta) {
+		return new Position( x + delta.getX(), y + delta.getY());
+	}
 	
 	
 }

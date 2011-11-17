@@ -5,6 +5,7 @@ import ar.com.game.handler.chat.ServerChatRequestHandler;
 import ar.com.game.handler.gui.ClientCloseNotifyHandler;
 import ar.com.game.handler.gui.ClientLineTypedNotifyHandler;
 import ar.com.game.handler.gui.ClientMouseMovedNotifyHandler;
+import ar.com.game.handler.gui.ClientMoveKeyNotifyHandler;
 import ar.com.game.handler.move.ClientPlayerMoveNotifyHandler;
 import ar.com.game.handler.move.ServerPlayerMoveRequestHandler;
 import ar.com.game.handler.session.ClientConnectNotifyHandler;
@@ -18,6 +19,7 @@ import ar.com.game.network.message.chat.ChatRequest;
 import ar.com.game.network.message.gui.CloseNotify;
 import ar.com.game.network.message.gui.LineTypedNotify;
 import ar.com.game.network.message.gui.MouseMovedNotify;
+import ar.com.game.network.message.gui.MoveKeyNotify;
 import ar.com.game.network.message.move.PlayerMoveNotify;
 import ar.com.game.network.message.move.PlayerMoveRequest;
 import ar.com.game.network.message.session.ConnectNotify;
@@ -42,6 +44,7 @@ public class MessageHubConfigurer {
 		// no handler for MouseMovedNotify
 		MessageHub.subscribe(PlayerMoveRequest.class, ServerPlayerMoveRequestHandler.get());
 		// no handler for PlayerMoveNotify
+		// no handler for MoveKeyNotify
 	}
 
 	public static void setupClient() {
@@ -59,6 +62,7 @@ public class MessageHubConfigurer {
 		MessageHub.subscribe(MouseMovedNotify.class,  ClientMouseMovedNotifyHandler.get());
 		// no handler for PlayerMoveRequest
 		MessageHub.subscribe(PlayerMoveNotify.class,  ClientPlayerMoveNotifyHandler.get());
+		MessageHub.subscribe(MoveKeyNotify.class,  ClientMoveKeyNotifyHandler.get());
 	}
 
 }

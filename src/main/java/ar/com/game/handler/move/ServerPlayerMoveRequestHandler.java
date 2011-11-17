@@ -1,5 +1,6 @@
 package ar.com.game.handler.move;
 
+import ar.com.game.backend.server.ServerBackend;
 import ar.com.game.handler.base.BaseServerHandler;
 import ar.com.game.network.dispatch.MessageListener;
 import ar.com.game.network.message.move.PlayerMoveNotify;
@@ -19,7 +20,8 @@ public class ServerPlayerMoveRequestHandler extends BaseServerHandler implements
 
 	public void handle(PlayerMoveRequest message) {
 		Long sessionId = getClient(message.getChannel());
-		sendToAll(new PlayerMoveNotify(sessionId, message.getPosition()));
+		ServerBackend.movePlayer(sessionId, message.getDelta());
+		sendToAll(new PlayerMoveNotify(sessionId, ServerBackend.getPosition(sessionId)));
 	}
 
 }
